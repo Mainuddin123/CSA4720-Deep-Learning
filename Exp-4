@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LinearRegression
+
+# Load the iris dataset
+data = load_iris()
+X = data.data[:, 0]  # Using the first feature (sepal length) as input (x)
+y = data.target  # Using the target variable (species) as output (y)
+
+# Calculate the cross-deviation and deviation about x
+x_mean = np.mean(X)
+y_mean = np.mean(y)
+cross_deviation = np.sum((X - x_mean) * (y - y_mean))
+x_deviation = np.sum((X - x_mean) ** 2)
+
+# Calculate the regression coefficients
+b1 = cross_deviation / x_deviation
+b0 = y_mean - (b1 * x_mean)
+
+# Function to show the plot
+def plot_regression_line():
+    plt.scatter(X, y, color='blue', label='Data Points')
+    plt.plot(X, b0 + b1 * X, color='red', label='Regression Line')
+    plt.xlabel('Sepal Length')
+    plt.ylabel('Species')
+    plt.title('Linear Regression on Iris Dataset')
+    plt.legend()
+    plt.show()
+
+# Estimate the coefficients and plot the regression line
+print("Regression Coefficients:")
+print("Intercept (b0):", b0)
+print("Slope (b1):", b1)
+plot_regression_line()
