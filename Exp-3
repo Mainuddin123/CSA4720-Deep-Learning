@@ -1,0 +1,20 @@
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+# Step 1: Load the Breast Cancer Wisconsin dataset
+data = load_breast_cancer()
+X = data.data
+y = data.target
+
+# Step 2: Create a logistic regression model
+model = LogisticRegression()
+
+# Step 3: Evaluate the model using cross-validation
+k = 5  # Number of folds for cross-validation
+cv_scores = cross_val_score(model, X, y, cv=k, scoring='accuracy')
+
+# Step 4: Print the cross-validation scores
+print("Cross-Validation Scores:", cv_scores)
+print("Average Accuracy:", np.mean(cv_scores))
