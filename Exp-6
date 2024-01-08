@@ -1,0 +1,34 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the Iris dataset
+dataset = pd.read_csv("/content/IRIS - IRIS.csv")
+
+# Assuming your dataset has features in columns 1-4 and the target variable in the last column
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+
+# Feature Scaling (if needed, KNN is distance-based)
+# You can skip this step if your features are already on a similar scale
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the K-Nearest Neighbors classifier
+k = 5  # Number of neighbors
+classifier = KNeighborsClassifier(n_neighbors=k)
+
+# Training the K-Nearest Neighbors (K-NN) model on the training set
+classifier.fit(X_train, y_train)
+
+# Making predictions on the test set
+y_pred = classifier.predict(X_test)
+
+# Finding accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
